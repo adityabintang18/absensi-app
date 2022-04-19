@@ -11,12 +11,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    TextView txt_user_main, txt_name_main;
+    TextView txt_greeting, txt_name_main;
     SessionManager sessionManager;
-    String username, name;
+    String  name ;
     Button btn_logout;
+    Calendar calender;
+    Integer hour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +33,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             moveToLogin();
         }
 
-        txt_user_main = findViewById(R.id.txt_user_main);
+        txt_greeting = findViewById(R.id.txt_greeting);
         txt_name_main = findViewById(R.id.txt_name_main);
         btn_logout = findViewById(R.id.btn_logout);
         btn_logout.setOnClickListener(this);
 
-        username = sessionManager.getUserDetail().get(SessionManager.USERNAME);
         name = sessionManager.getUserDetail().get(SessionManager.NAME);
 
-        txt_user_main.setText(username);
+        calender = Calendar.getInstance();
+        hour = calender.get(Calendar.HOUR_OF_DAY);
+        if(hour>0 && hour<10){
+            txt_greeting.setText("Selamat Pagi");
+        } else if (hour>10 && hour<14){
+            txt_greeting.setText("Selamat Siang");
+        } else if (hour>14 && hour<18) {
+            txt_greeting.setText("Selamat Sore");
+        }else {
+            txt_greeting.setText("Selamat Malam");
+        }
         txt_name_main.setText(name);
 
 
@@ -43,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void moveToLogin() {
-
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(intent);

@@ -16,7 +16,7 @@ public class SessionManager {
     private SharedPreferences.Editor editor;
 
     public static final String IS_LOGGED_IN = "isLoggedIn";
-    public static  final String USER_ID = "user_id";
+    public static final String USER_ID = "user_id";
     public static final String USERNAME = "username";
     public static final String NAME = "name";
 
